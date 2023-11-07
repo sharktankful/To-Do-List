@@ -26,22 +26,31 @@ database = app.database()
 # CREATES NEW USER AND STORAGE WITH UID AS THE UNIQUE KEY
 @api_view(['POST'])
 def create_user(request):
+    # EXTRACTS USER SIGNUP INFORMATION
     data = request.data
     email = data.get('email')
     password = data.get('password')
 
-    user = auth.create_user_with_email_and_password(email, password)
+    try:
+        # CREATES USER AND DATABASE FOR USER
+        user = auth.create_user_with_email_and_password(email=email, password=password)
+        uid = user['localId']
+        database.child('Data').child('Users').child(uid).set({'tasks': ''})
+        return Response({'uid': uid}, status=201)
+    except Exception as e:
+        # RETURNS AN ERROR STATUS IF SIGNUP INFO IS INVALID
+        return Response({'error': str(e)}, status=400)
 
-    uid = user['localId']
-    database.child('Data').child('Users').child(uid).set({'tasks': ''})
 
-    return Response(status=201)
 
 
 # SUBMITS INFORMATION TO FIRESTORE DATABASE'S UNIQUE KEY (UID)
 @api_view(['POST'])
-def create_task(request, uid):
-    database.child('Data').child(uid).update(request.data)
+def create_task(request):
+    data = request.data
+    uid = data.get('uid')
+    message = data.get('message')
+    database.child('Data').child('Users').child(uid).child('tasks').update({message})
 
     return Response(status=201)
 
