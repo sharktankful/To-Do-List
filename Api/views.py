@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-import firebase, json
+import firebase
 
 
 config = {
@@ -26,7 +26,7 @@ database = app.database()
 # CREATES NEW USER AND STORAGE WITH UID AS THE UNIQUE KEY
 @api_view(['POST'])
 def create_user(request):
-    # EXTRACTS USER SIGNUP INFORMATION
+    # EXTRACTS USER SIGNUP INFORMATION FROM FOURM
     data = request.data
     email = data.get('email')
     password = data.get('password')
@@ -46,6 +46,33 @@ def create_user(request):
     except Exception as e:
         # RETURNS AN ERROR STATUS IF SIGNUP INFO IS INVALID
         return Response({'error': str(e)}, status=400)
+
+
+# LOGS IN USER AND RETURNS THERE UID
+@api_view(['POST'])
+def login_user(request):
+     # EXTRACTS USER LOGIN INFORMATION FROM FOURM
+    data = request.data
+    email = data.get('email')
+    password = data.get('password')
+
+    try:
+        # LOGIN USER
+        user = auth.sign_in_with_email_and_password(email=email, password=password)
+        uid = user['localId']
+        # RETURNS USER'S UID TO FRONTEND WHEN LOGGED IN
+        return Response({'status': 'Login Successfull!', 'uid': uid}, status=201)
+    except Exception as e:
+        # RETURNS AN ERROR STATUS IF LOG IN INFO IS INVALID
+        return Response({'error': str(e)}, status=400)
+
+
+
+@api_view(['POST'])
+def logout_user(request):
+    data = request.data
+    pass
+
 
 
 
