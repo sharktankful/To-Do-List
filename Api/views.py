@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-import firebase
+import firebase, json
 
 
 config = {
@@ -49,7 +49,6 @@ def create_user(request):
 
 
 
-
 # SUBMITS INFORMATION TO FIRESTORE DATABASE'S UNIQUE KEY (UID)
 @api_view(['POST'])
 def create_task(request):
@@ -70,7 +69,7 @@ def delete_task(request):
     data = request.data
     uid = data.get('uid')
     message_key = data.get('message_key')
-    
+
     try:
         database.child('Data').child('Users').child(uid).child('Tasks').child(message_key).remove()
         return Response(status=204)
@@ -81,19 +80,9 @@ def delete_task(request):
 
 # RECEIVE DATE AND TASK DESCRIPTION FROM DATABASE
 @api_view(['GET'])
-def get_task(request):
-    name = database.child('Data').child('Name').get().val()
-    stack = database.child('Data').child('Stack').get().val()
-    framework = database.child('Data').child('Framework').get().val()
-    date = database.child('Data').child('Date').get().val()
-
-    context = {
-        'name':name,
-        'stack':stack,
-        'framework':framework,
-        'date':date
-    }
-    return Response(context)
-
-
-
+def get_task(request, uid):
+    try:
+        tasks = database.child('Data').child('Users').child(str(uid)).child('Tasks').get().val()
+        return Response(tasks, status=200)
+    except Exception as e:
+        return Response({'error': str(e)}, status=404)
