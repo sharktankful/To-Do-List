@@ -35,7 +35,13 @@ def create_user(request):
         # CREATES USER AND DATABASE FOR USER
         user = auth.create_user_with_email_and_password(email=email, password=password)
         uid = user['localId']
-        database.child('Data').child('Users').child(uid).set({'tasks': ''})
+
+        # SAVES EMAIL, PASSWORD AND TASKS TO THE DATABASE WHILE RETURNING THE UID TO THE FRONTEND
+        # FOR ACCESSING USER'S CREATED TASKS
+        database.child('Data').child('Users').child(uid).child('Email').set(email)
+        database.child('Data').child('Users').child(uid).child('Password').set(password)
+        database.child('Data').child('Users').child(uid).child('Tasks').set('')
+
         return Response({'uid': uid}, status=201)
     except Exception as e:
         # RETURNS AN ERROR STATUS IF SIGNUP INFO IS INVALID
@@ -50,17 +56,26 @@ def create_task(request):
     data = request.data
     uid = data.get('uid')
     message = data.get('message')
-    database.child('Data').child('Users').child(uid).child('tasks').update({message})
 
-    return Response(status=201)
+    try:
+        task = database.child('Data').child('Users').child(uid).child('Tasks').push(message)
+        return Response({task.get('name'): message}, status=201)
+    except Exception as e:
+        return Response({'error': str(e)}, status=400)
 
 
 # DELETES DATA AT DATABASE'S UNIQUE KEY (UID) AND REMOVES EVERYTHING FROM IT
 @api_view(['DELETE'])
-def delete_task(request, uid):
-    database.child('Data').child(uid).remove()
-
-    return Response(status=201)
+def delete_task(request):
+    data = request.data
+    uid = data.get('uid')
+    message_key = data.get('message_key')
+    
+    try:
+        database.child('Data').child('Users').child(uid).child('Tasks').child(message_key).remove()
+        return Response(status=204)
+    except Exception as e:
+        return Response({'error': str(e)}, status=404)
 
 
 
