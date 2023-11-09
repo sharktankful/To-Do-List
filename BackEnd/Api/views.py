@@ -22,7 +22,6 @@ auth = app.auth()
 database = app.database()
 
 
-
 # CREATES NEW USER AND STORAGE WITH UID AS THE UNIQUE KEY
 @api_view(['POST'])
 def create_user(request):
@@ -34,7 +33,7 @@ def create_user(request):
     try:
         # CREATES USER AND DATABASE FOR USER
         user = auth.create_user_with_email_and_password(email=email, password=password)
-        uid = user['localId']
+        account_info = auth.get_account_info(user['idToken'])
 
         # SAVES EMAIL, PASSWORD AND TASKS TO THE DATABASE WHILE RETURNING THE UID TO THE FRONTEND
         # FOR ACCESSING USER'S CREATED TASKS
@@ -42,7 +41,7 @@ def create_user(request):
         database.child('Data').child('Users').child(uid).child('Password').set(password)
         database.child('Data').child('Users').child(uid).child('Tasks').set('')
 
-        return Response({'uid': uid}, status=201)
+        return Response(account_info, status=201)
     except Exception as e:
         # RETURNS AN ERROR STATUS IF SIGNUP INFO IS INVALID
         return Response({'error': str(e)}, status=400)
@@ -59,19 +58,14 @@ def login_user(request):
     try:
         # LOGIN USER
         user = auth.sign_in_with_email_and_password(email=email, password=password)
-        uid = user['localId']
+        account_info = auth.get_account_info(user['idToken'])
         # RETURNS USER'S UID TO FRONTEND WHEN LOGGED IN
-        return Response({'status': 'Login Successfull!', 'uid': uid}, status=201)
+        print("Successfully Logged In!")
+        return Response(account_info, status=201)
     except Exception as e:
         # RETURNS AN ERROR STATUS IF LOG IN INFO IS INVALID
         return Response({'error': str(e)}, status=400)
 
-
-
-@api_view(['POST'])
-def logout_user(request):
-    data = request.data
-    pass
 
 
 
@@ -99,7 +93,7 @@ def delete_task(request):
 
     try:
         database.child('Data').child('Users').child(uid).child('Tasks').child(message_key).remove()
-        return Response(status=204)
+        return Response({'status': 'message deleted'}, status=204)
     except Exception as e:
         return Response({'error': str(e)}, status=404)
 
