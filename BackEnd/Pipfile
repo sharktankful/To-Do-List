@@ -7,7 +7,7 @@ name = "pypi"
 django = "*"
 firebase-rest-api = "*"
 djangorestframework = "*"
-django-cors-headers = "*"
+gunicorn = "==20.1.0"
 
 [dev-packages]
 
