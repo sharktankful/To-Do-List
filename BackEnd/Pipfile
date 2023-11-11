@@ -7,6 +7,7 @@ name = "pypi"
 django = "*"
 firebase-rest-api = "*"
 djangorestframework = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
