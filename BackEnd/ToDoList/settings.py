@@ -31,6 +31,7 @@ ALLOWED_HOSTS = [
     'ToDoListAPI-dev.us-west-2.elasticbeanstalk.com.',
     'http://ToDoListAPI-dev.us-west-2.elasticbeanstalk.com',
     'https://ToDoListAPI-dev.us-west-2.elasticbeanstalk.com',
+    '127.0.0.1'
 ]
 
 
