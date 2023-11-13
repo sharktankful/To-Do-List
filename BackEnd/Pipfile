@@ -7,7 +7,7 @@ name = "pypi"
 django = "*"
 firebase-rest-api = "*"
 djangorestframework = "*"
-gunicorn = "==20.1.0"
+awsebcli = "*"
 
 [dev-packages]
 
