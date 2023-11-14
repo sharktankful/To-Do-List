@@ -8,6 +8,7 @@ django = "*"
 firebase-rest-api = "*"
 djangorestframework = "*"
 awsebcli = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 

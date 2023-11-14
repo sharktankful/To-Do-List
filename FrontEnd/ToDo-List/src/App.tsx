@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
 
     axios
-      .get<user[]>("http://127.0.0.1:8000/view/dILRbpiLVnfFsGyAB1Oj7xeyDxI3")
+      .get<user[]>("http://todolistapi-dev.us-west-2.elasticbeanstalk.com/view/dILRbpiLVnfFsGyAB1Oj7xeyDxI3/")
       .then((res) => console.log(res.data));
   }, []);
 
