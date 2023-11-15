@@ -1,29 +1,39 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-interface props {
-  items: string[];
-  heading: string
+
+interface YourData {
+  [key: string]: string;
 }
 
-function ListGroup({items, heading}: props) {
-  const [selectedIndex, setSelectedIndex] = useState(-1)
+function ListGroup() {
+  const [data, setData] = useState<YourData>({});
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  const message = items.length === 0 && <p>No Items Found</p>;
-
-  // EventHandler
+  useEffect(() => {
+    axios
+      .get(
+        "http://todolistapi-dev.us-west-2.elasticbeanstalk.com/view/dILRbpiLVnfFsGyAB1Oj7xeyDxI3/"
+      )
+      .then((res) => setData(res.data));
+  }, []);
 
   return (
     <>
-      <h1>{heading}</h1>
-      {message}
       <ul className="list-group">
-        {items.map((item, index) => (
+        {Object.values(data).map((message, index) => (
           <li
-            className={selectedIndex === index ? 'list-group-item active': 'list-group-item'}
-            key={item}
-            onClick={() => {setSelectedIndex(index)}}
+            className={
+              selectedIndex === index
+                ? "list-group-item active"
+                : "list-group-item"
+            }
+            key={index}
+            onClick={() => {
+              setSelectedIndex(index);
+            }}
           >
-            {item}
+            {message}
           </li>
         ))}
       </ul>

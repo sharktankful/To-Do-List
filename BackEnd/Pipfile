@@ -9,6 +9,7 @@ firebase-rest-api = "*"
 djangorestframework = "*"
 awsebcli = "*"
 django-cors-headers = "*"
+pyjwt = "*"
 
 [dev-packages]
 
