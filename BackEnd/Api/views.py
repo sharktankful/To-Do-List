@@ -1,8 +1,7 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.conf import settings
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-import firebase, secrets, jwt
+import firebase, jwt
 
 
 config = {
@@ -21,7 +20,7 @@ app = firebase.initialize_app(config)
 auth = app.auth()
 database = app.database()
 
-secret_key = secrets.token_hex(32)
+secret_key = settings.JWT_SECRET_KEY
 
 
 
@@ -44,15 +43,14 @@ def create_user(request):
         database.child('Data').child('Users').child(uid).child('Password').set(password)
         database.child('Data').child('Users').child(uid).child('Tasks').set('')
 
-        # Generate JWT token
+        # GENERATE A JWT TOKEN
         token_payload = {'uid': uid}
         token = jwt.encode(token_payload, secret_key, algorithm='HS256')
 
-        #DATA TO BE INCLUDED IN THE RESPONSE
+        # DATA TO BE INCLUDED IN THE RESPONSE
         response_data = {
-            'token': token,
-            'uid': uid,
-            'email': email
+            'status': 'Successfully created account!',
+            'token': token
         }
 
         return Response(response_data, status=201)
