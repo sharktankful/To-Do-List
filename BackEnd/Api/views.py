@@ -60,7 +60,7 @@ def create_user(request):
         return Response({'error': str(e)}, status=400)
 
 
-# LOGS IN USER AND RETURNS THERE UID
+# LOGS IN USER AND RETURNS THEIR JWT TOKEN TO FRONTEND
 @api_view(['POST'])
 def login_user(request):
      # EXTRACTS USER LOGIN INFORMATION FROM FOURM
@@ -103,7 +103,13 @@ def create_task(request):
         uid = decoded_token.get('uid')
 
         task = database.child('Data').child('Users').child(uid).child('Tasks').push(message)
-        return Response({task.get('name'): message}, status=201)
+
+        # DATA TO BE INCLUDED IN THE RESPONSE
+        response_data = {
+            'status': 'Successfully created task!',
+            task.get('name'): message
+        }
+        return Response(response_data, status=201)
     
     except Exception as e:
         return Response({'error': str(e)}, status=400)
@@ -121,7 +127,12 @@ def delete_task(request):
         uid = decoded_token.get('uid')
 
         database.child('Data').child('Users').child(uid).child('Tasks').child(message_key).remove()
-        return Response({'status': 'message deleted'}, status=204)
+        
+        # DATA TO BE INCLUDED IN THE RESPONSE
+        response_data = {
+            'status': 'Successfully deleted task!'
+        }
+        return Response(response_data, status=204)
     except Exception as e:
         return Response({'error': str(e)}, status=404)
 
