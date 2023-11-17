@@ -98,10 +98,11 @@ def create_task(request):
     token = request.headers.get('Authorization', '').split('Bearer ')[1]  # Get the JWT from the Authorization header
 
     try:
-        # Decode the JWT and extract the UID
+        # DECODE THE JWT AND EXTRACT THE UID
         decoded_token = jwt.decode(token, secret_key, algorithms=['HS256'])
         uid = decoded_token.get('uid')
 
+        # TASK DESCRIPTION IS SAVED TO FIRESTORE DATABSE
         task = database.child('Data').child('Users').child(uid).child('Tasks').push(message)
 
         # DATA TO BE INCLUDED IN THE RESPONSE
@@ -122,10 +123,11 @@ def delete_task(request):
     message_key = request.data.get('message_key')
 
     try:
-        # Decode the JWT and extract the UID
+        # DECODE THE JWT AND EXTRACT THE UID
         decoded_token = jwt.decode(token, secret_key, algorithms=['HS256'])
         uid = decoded_token.get('uid')
 
+        # TASK DESCRIPTION IS REMOVED FROM FIRESTORE DATABSE
         database.child('Data').child('Users').child(uid).child('Tasks').child(message_key).remove()
         
         # DATA TO BE INCLUDED IN THE RESPONSE
