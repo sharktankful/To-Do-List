@@ -6,8 +6,10 @@ function App() {
   const [token, setToken] = useState<string>('');
 
   const handleTokenChange = (newToken: string) => {
-    setToken(newToken)
-  }
+    setToken(newToken);
+  };
+
+  
   return (
     <div>
       <Form onTokenChange={handleTokenChange}/>
