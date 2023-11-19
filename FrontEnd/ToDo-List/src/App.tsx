@@ -1,6 +1,7 @@
 import ListGroup from "./components/ListGroup";
 import Form from "./components/Form";
 import { useEffect, useState } from "react";
+import TaskList from "./components/TaskList";
 
 function App() {
   const [token, setToken] = useState<string>("");
@@ -23,7 +24,7 @@ function App() {
   if (token) {
     return (
       <div>
-        <h1>This is the main front page!</h1>
+        <TaskList />
       </div>
     );
   } else {
