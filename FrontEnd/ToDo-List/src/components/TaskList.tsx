@@ -1,32 +1,41 @@
-import axios, { AxiosRequestConfig } from 'axios';
-import React, { useEffect } from 'react';
-import jwt from "jsonwebtoken";
+import axios, { AxiosRequestConfig } from "axios";
+import React, { useEffect, useState } from "react";
 
 interface Props {
-    JWTToken: string;
+  JWTToken: string;
 }
 
+const TaskList: React.FC<Props> = ({ JWTToken }) => {
+  const [tasks, setTasks] = useState<{ [key: string]: string }>({});
 
+  useEffect(() => {
+    const requestData: AxiosRequestConfig = {
+      headers: {
+        Authorization: `Bearer ${JWTToken}`,
+      },
+    };
 
-const TaskList: React.FC<Props> = ({JWTToken}) => {
-
-
-    useEffect(() => {
-        const requestData: AxiosRequestConfig = {
-            headers: {
-                Authorization: JWTToken,
-            }
-        }
-
-        axios.get("http://todolistapi-dev.us-west-2.elasticbeanstalk.com/create/", requestData).then((res) => console.log(res.data));
-
-    }, [JWTToken]);
-
-
+    axios
+      .get(
+        "http://todolistapi-dev.us-west-2.elasticbeanstalk.com/view/",
+        requestData
+      )
+      .then((res) => {
+        const fetchedTasks: { [key: string]: string } = res.data;
+        setTasks(fetchedTasks);
+      });
+  }, [JWTToken]);
 
   return (
-    <div>TaskList</div>
-  )
-}
+    <div>
+      <h2>Task List</h2>
+      <ul>
+        {Object.keys(tasks).map((taskID) => (
+          <li key={taskID}>{tasks[taskID]}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
-export default TaskList
+export default TaskList;

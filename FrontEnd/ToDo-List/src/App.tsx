@@ -24,7 +24,7 @@ function App() {
   if (token) {
     return (
       <div>
-        <TaskList />
+        <TaskList JWTToken={token} />
       </div>
     );
   } else {
