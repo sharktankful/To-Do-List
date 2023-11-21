@@ -26,23 +26,48 @@ const TaskList: React.FC<Props> = ({ JWTToken }) => {
       });
   }, [JWTToken]);
 
-  // Function to add a new task
-  const addTask = (taskId: string, taskDescription: string) => {
-    setTasks((prevTasks) => ({
-      ...prevTasks,
-      [taskId]: taskDescription,
-    }));
+
+
+
+  const handleRemoveTask = (taskID: string) => {
+    const requestData: AxiosRequestConfig = {
+      headers: {
+        Authorization: `Bearer ${JWTToken}`,
+      },
+    };
+
+    axios.delete(
+      `http://todolistapi-dev.us-west-2.elasticbeanstalk.com/view/delete/${taskID}`,
+      requestData
+    ).then((res) => {
+      const updatedTasks = { ...tasks };
+      delete updatedTasks[taskID]
+      setTasks(updatedTasks)
+    });
   };
 
-  console.log(tasks);
 
 
+
+  
   return (
     <div>
       <h2>Task List</h2>
       <ul className="list-group">
         {Object.keys(tasks).map((taskID) => (
-          <li key={taskID} className="list-group-item">{tasks[taskID]}</li>
+          <li
+            key={taskID}
+            className="list-group-item d-flex justify-content-between"
+          >
+            {tasks[taskID]}
+            <button
+              className="btn btn-danger"
+              type="submit"
+              onClick={() => handleRemoveTask(taskID)}
+            >
+              Remove
+            </button>
+          </li>
         ))}
       </ul>
     </div>

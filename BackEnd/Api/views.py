@@ -118,9 +118,9 @@ def create_task(request):
 
 # DELETES DATA AT DATABASE'S UNIQUE KEY (UID) AND REMOVES EVERYTHING FROM IT
 @api_view(['DELETE'])
-def delete_task(request):
+def delete_task(request, task_id):
     token = request.headers.get('Authorization', '').split('Bearer ')[1]  # Get the JWT from the Authorization header
-    message_key = request.data.get('message_key')
+    # message_key = request.data.get('message_key')
 
     try:
         # DECODE THE JWT AND EXTRACT THE UID
@@ -128,7 +128,7 @@ def delete_task(request):
         uid = decoded_token.get('uid')
 
         # TASK DESCRIPTION IS REMOVED FROM FIRESTORE DATABSE
-        database.child('Data').child('Users').child(uid).child('Tasks').child(message_key).remove()
+        database.child('Data').child('Users').child(uid).child('Tasks').child(task_id).remove()
         
         # DATA TO BE INCLUDED IN THE RESPONSE
         response_data = {
