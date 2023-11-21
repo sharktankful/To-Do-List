@@ -26,12 +26,23 @@ const TaskList: React.FC<Props> = ({ JWTToken }) => {
       });
   }, [JWTToken]);
 
+  // Function to add a new task
+  const addTask = (taskId: string, taskDescription: string) => {
+    setTasks((prevTasks) => ({
+      ...prevTasks,
+      [taskId]: taskDescription,
+    }));
+  };
+
+  console.log(tasks);
+
+
   return (
     <div>
       <h2>Task List</h2>
-      <ul>
+      <ul className="list-group">
         {Object.keys(tasks).map((taskID) => (
-          <li key={taskID}>{tasks[taskID]}</li>
+          <li key={taskID} className="list-group-item">{tasks[taskID]}</li>
         ))}
       </ul>
     </div>

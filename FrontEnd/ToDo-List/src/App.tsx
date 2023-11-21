@@ -2,6 +2,7 @@ import ListGroup from "./components/ListGroup";
 import Form from "./components/Form";
 import { useEffect, useState } from "react";
 import TaskList from "./components/TaskList";
+import CreateTask from "./components/CreateTask";
 
 function App() {
   const [token, setToken] = useState<string>("");
@@ -24,6 +25,7 @@ function App() {
   if (token) {
     return (
       <div>
+        <CreateTask JWTToken={token}/>
         <TaskList JWTToken={token} />
       </div>
     );
