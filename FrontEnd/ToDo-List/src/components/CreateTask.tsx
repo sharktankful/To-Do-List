@@ -8,7 +8,8 @@ interface Props {
 const CreateTask: React.FC<Props> = ({ JWTToken }) => {
   const descRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
 
     const description = descRef.current?.value || "";
 
@@ -21,11 +22,15 @@ const CreateTask: React.FC<Props> = ({ JWTToken }) => {
 
       const task = { message: description };
 
-      await axios.post(
+      const response = await axios.post(
         "http://todolistapi-dev.us-west-2.elasticbeanstalk.com/submit/",
         task,
         requestData
       );
+      console.log(response.data);
+      if (response.status === 201) {
+        window.location.reload();
+      }
     } catch (error) {
       console.error("Error sending request:", error);
     }

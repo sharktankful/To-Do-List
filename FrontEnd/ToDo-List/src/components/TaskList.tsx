@@ -26,9 +26,6 @@ const TaskList: React.FC<Props> = ({ JWTToken }) => {
       });
   }, [JWTToken]);
 
-
-
-
   const handleRemoveTask = (taskID: string) => {
     const requestData: AxiosRequestConfig = {
       headers: {
@@ -36,18 +33,22 @@ const TaskList: React.FC<Props> = ({ JWTToken }) => {
       },
     };
 
-
-    axios.delete(
-      `http://todolistapi-dev.us-west-2.elasticbeanstalk.com/delete/${taskID}/`,
-      requestData
-    ).then((res) => {
-      const updatedTasks = { ...tasks };
-      delete updatedTasks[taskID]
-      setTasks(updatedTasks)
-    });
+    axios
+      .delete(
+        `http://todolistapi-dev.us-west-2.elasticbeanstalk.com/delete/${taskID}/`,
+        requestData
+      )
+      .then(() => {
+        setTasks((prevTask) => {
+          const updatedTasks = { ...prevTask };
+          delete updatedTasks[taskID];
+          return updatedTasks;
+        });
+      })
+      .catch((error) => {
+        console.error("Error removing task:", error);
+      });
   };
-
-
 
   return (
     <div>

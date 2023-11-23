@@ -12,7 +12,7 @@ function App() {
     if (storedToken) {
       setToken(storedToken);
     }
-  });
+  }, []);
 
   const handleTokenChange = (newToken: string) => {
     setToken(newToken);
