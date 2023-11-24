@@ -1,7 +1,9 @@
-import Form from "./components/Form";
+import Form from "./components/SignUpForm";
 import { useEffect, useState } from "react";
 import TaskList from "./components/TaskList";
 import CreateTask from "./components/CreateTask";
+import NavBar from "./components/NavBar";
+import LoginForm from "./components/LoginForm";
 
 function App() {
   const [token, setToken] = useState<string>("");
@@ -24,14 +26,16 @@ function App() {
   if (token) {
     return (
       <div>
-        <CreateTask JWTToken={token}/>
+        <CreateTask JWTToken={token} />
         <TaskList JWTToken={token} />
+        <NavBar />
       </div>
     );
   } else {
     return (
       <div>
-        <Form onTokenChange={handleTokenChange} />
+        <LoginForm onTokenChange={handleTokenChange} />
+        {/* <Form onTokenChange={handleTokenChange} /> */}
       </div>
     );
   }
