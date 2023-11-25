@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { FormEvent, useRef } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 interface LoginProps {
@@ -70,13 +70,13 @@ const LoginForm: React.FC<LoginProps> = ({ onTokenChange }) => {
 
       <nav className="navbar bg-body-tertiary">
         <div className="container-fluid">
-          <a
+          <Link
+            to={"signup"}
             className="navbar-brand mx-auto"
-            href="/src/components/SignUpForm.tsx"
             style={{ color: "blue" }}
           >
-            Create A New Account
-          </a>
+            Create An Account
+          </Link>
         </div>
       </nav>
     </div>

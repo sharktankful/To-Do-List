@@ -1,5 +1,6 @@
 import React, { FormEvent, useRef } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 interface FormProps {
   onTokenChange: (token: string) => void;
@@ -30,7 +31,7 @@ const SignUpForm: React.FC<FormProps> = ({ onTokenChange }) => {
 
   return (
     <div>
-      <h1>Sign Out</h1>
+      <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
@@ -62,6 +63,17 @@ const SignUpForm: React.FC<FormProps> = ({ onTokenChange }) => {
           Submit
         </button>
       </form>
+      <nav className="navbar bg-body-tertiary">
+        <div className="container-fluid">
+          <Link
+            to={"/"}
+            className="navbar-brand mx-auto"
+            style={{ color: "blue" }}
+          >
+            Log In
+          </Link>
+        </div>
+      </nav>
     </div>
   );
 };
