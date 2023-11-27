@@ -7,6 +7,7 @@ interface LoginProps {
 }
 
 const LoginForm: React.FC<LoginProps> = ({ onTokenChange }) => {
+  const [showAlert, setShowAlert] = useState(false);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -30,11 +31,30 @@ const LoginForm: React.FC<LoginProps> = ({ onTokenChange }) => {
       }
     } catch (error) {
       console.error("Error sending request:", error);
+
+      setShowAlert(true);
     }
+
   };
 
   return (
     <div>
+      {showAlert && (
+        <div
+          className="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          Incorrect email or password entered.
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+
+
+      )}
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">

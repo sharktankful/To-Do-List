@@ -1,4 +1,4 @@
-import React, { FormEvent, useRef } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -7,6 +7,7 @@ interface FormProps {
 }
 
 const SignUpForm: React.FC<FormProps> = ({ onTokenChange }) => {
+  const [showAlert, setShowAlert] = useState(false);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -26,11 +27,29 @@ const SignUpForm: React.FC<FormProps> = ({ onTokenChange }) => {
       onTokenChange(token);
     } catch (error) {
       console.error("Error sending request:", error);
+
+      setShowAlert(true);
     }
   };
 
   return (
     <div>
+      {showAlert && (
+        <div
+          className="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          Enter in a correct email.
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+
+
+      )}
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
