@@ -65,6 +65,10 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+# REDIRECTS HTTP TO HTTPS CONNECTION
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Add your React app's origin here
     # Add other origins as needed
