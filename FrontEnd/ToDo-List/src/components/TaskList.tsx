@@ -35,7 +35,7 @@ const TaskList: React.FC<Props> = ({ JWTToken }) => {
 
     axios
       .delete(
-        `htts://todolistapi.com/delete/${taskID}/`,
+        `https://todolistapi.com/delete/${taskID}/`,
         requestData
       )
       .then(() => {
