@@ -24,6 +24,9 @@ database = app.database()
 # JWT SECRET KEY
 secret_key = settings.JWT_SECRET_KEY
 
+
+
+# FRONT PAGE FOR DOMAIN URL
 def front_page(request):
     return HttpResponse("This is the frontpage of the API!")
 
