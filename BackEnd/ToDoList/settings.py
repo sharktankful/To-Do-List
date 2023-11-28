@@ -73,7 +73,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Add your React app's origin here
     # Add other origins as needed
     "https://to-do-list-flame-nine.vercel.app",
-    "https://to-do-list-git-main-sharktankful.vercel.app"
+    "https://to-do-list-git-main-sharktankful.vercel.app",
+    "https://to-do-list-50hziuhk7-sharktankful.vercel.app"
 ]
 
 
