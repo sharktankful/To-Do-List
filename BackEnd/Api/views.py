@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import firebase, jwt
@@ -23,7 +24,8 @@ database = app.database()
 # JWT SECRET KEY
 secret_key = settings.JWT_SECRET_KEY
 
-
+def front_page(request):
+    return HttpResponse("This is the frontpage of the API!")
 
 # CREATES NEW USER AND STORAGE WITH UID AS THE UNIQUE KEY
 @api_view(['POST'])
