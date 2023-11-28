@@ -19,7 +19,7 @@ const SignUpForm: React.FC<FormProps> = ({ onTokenChange }) => {
 
     try {
       const response = await axios.post(
-        "http://todolistapi-dev.us-west-2.elasticbeanstalk.com/create/",
+        "https://todolistapi.com/create/",
         { email, password }
       );
       const token = response.data.token;

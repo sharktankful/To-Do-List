@@ -19,7 +19,7 @@ const LoginForm: React.FC<LoginProps> = ({ onTokenChange }) => {
 
     try {
       const response = await axios.post(
-        "http://todolistapi-dev.us-west-2.elasticbeanstalk.com/login/",
+        "https://todolistapi.com/login/",
         { email, password }
       );
 

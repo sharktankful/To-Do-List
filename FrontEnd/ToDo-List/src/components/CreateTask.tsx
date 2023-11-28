@@ -23,7 +23,7 @@ const CreateTask: React.FC<Props> = ({ JWTToken }) => {
       const task = { message: description };
 
       const response = await axios.post(
-        "http://todolistapi-dev.us-west-2.elasticbeanstalk.com/submit/",
+        "https://todolistapi.com/submit/",
         task,
         requestData
       );

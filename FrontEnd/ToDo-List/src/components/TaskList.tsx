@@ -17,7 +17,7 @@ const TaskList: React.FC<Props> = ({ JWTToken }) => {
 
     axios
       .get(
-        "http://todolistapi-dev.us-west-2.elasticbeanstalk.com/view/",
+        "https://todolistapi.com/view/",
         requestData
       )
       .then((res) => {
