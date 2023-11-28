@@ -48,11 +48,9 @@ const CreateTask: React.FC<Props> = ({ JWTToken }) => {
           aria-label="Recipient's username"
           aria-describedby="basic-addon2"
         />
-        <div className="input-group-append">
-          <button className="btn btn-success" type="submit">
-            Add Task
-          </button>
-        </div>
+        <button className="btn btn-success" type="submit">
+          Add Task
+        </button>
       </div>
     </form>
   );
