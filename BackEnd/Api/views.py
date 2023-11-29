@@ -27,8 +27,9 @@ secret_key = settings.JWT_SECRET_KEY
 
 
 # FRONT PAGE FOR DOMAIN URL
+@api_view()
 def front_page(request):
-    return HttpResponse("This is the frontpage of the API!")
+    return Response("This is the frontpage of the API!")
 
 # CREATES NEW USER AND STORAGE WITH UID AS THE UNIQUE KEY
 @api_view(['POST'])
