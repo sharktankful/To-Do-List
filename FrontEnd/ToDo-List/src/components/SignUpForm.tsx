@@ -78,9 +78,11 @@ const SignUpForm: React.FC<FormProps> = ({ onTokenChange }) => {
             id="exampleInputPassword1"
           />
         </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
+        <div className="text-center">
+          <button type="submit" className="btn btn-primary w-100">
+            Submit
+          </button>
+        </div>
       </form>
       <nav className="navbar bg-body-tertiary">
         <div className="container-fluid">

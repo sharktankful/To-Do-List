@@ -5,6 +5,7 @@ import NavBar from "./components/NavBar";
 import LoginForm from "./components/LoginForm";
 import SignUpForm from "./components/SignUpForm";
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
+import './index.css'
 
 function App() {
   
@@ -39,7 +40,7 @@ function App() {
   
   if (token) {
     return (
-      <div>
+      <div className="todo-list-container">
         <CreateTask JWTToken={token} />
         <TaskList JWTToken={token} />
         <NavBar />
@@ -47,7 +48,7 @@ function App() {
     );
   } else {
     return (
-      <div>
+      <div className="form">
         <RouterProvider router={router}/>
       </div>
     );

@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { FormEvent, useRef } from "react";
+import '../index.css'
 
 interface Props {
   JWTToken: string;
@@ -37,8 +38,8 @@ const CreateTask: React.FC<Props> = ({ JWTToken }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="input-group mb-3">
+    <form onSubmit={handleSubmit} className="search-bar">
+      <div className="input-group mb-3 ">
         <input
           ref={descRef}
           id="desc"

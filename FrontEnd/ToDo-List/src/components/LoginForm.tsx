@@ -18,10 +18,10 @@ const LoginForm: React.FC<LoginProps> = ({ onTokenChange }) => {
     const password = passwordRef.current?.value || "";
 
     try {
-      const response = await axios.post(
-        "https://todolistapi.com/login/",
-        { email, password }
-      );
+      const response = await axios.post("https://todolistapi.com/login/", {
+        email,
+        password,
+      });
 
       if (response.status === 201) {
         const token = response.data.token;
@@ -34,7 +34,6 @@ const LoginForm: React.FC<LoginProps> = ({ onTokenChange }) => {
 
       setShowAlert(true);
     }
-
   };
 
   return (
@@ -52,8 +51,6 @@ const LoginForm: React.FC<LoginProps> = ({ onTokenChange }) => {
             aria-label="Close"
           ></button>
         </div>
-
-
       )}
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
@@ -83,9 +80,11 @@ const LoginForm: React.FC<LoginProps> = ({ onTokenChange }) => {
             id="exampleInputPassword1"
           />
         </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
+        <div className="text-center">
+          <button type="submit" className="btn btn-primary w-100">
+            Submit
+          </button>
+        </div>
       </form>
 
       <nav className="navbar bg-body-tertiary">

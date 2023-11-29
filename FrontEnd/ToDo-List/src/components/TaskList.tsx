@@ -1,3 +1,4 @@
+import '../index.css'
 import axios, { AxiosRequestConfig } from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -52,7 +53,7 @@ const TaskList: React.FC<Props> = ({ JWTToken }) => {
 
   return (
     <div>
-      <h2>Task List</h2>
+      <h2 className="text-center">Task List</h2>
       <ul className="list-group">
         {Object.keys(tasks).map((taskID) => (
           <li
