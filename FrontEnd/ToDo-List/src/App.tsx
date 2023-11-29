@@ -4,13 +4,12 @@ import CreateTask from "./components/CreateTask";
 import NavBar from "./components/NavBar";
 import LoginForm from "./components/LoginForm";
 import SignUpForm from "./components/SignUpForm";
-import { createBrowserRouter, RouterProvider} from "react-router-dom";
-import './index.css'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./index.css";
 
 function App() {
-  
   const [token, setToken] = useState<string>("");
-  
+
   // CHECK LOCAL BROWSER STORAGE FOR JWT TOKEN
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -18,10 +17,10 @@ function App() {
       setToken(storedToken);
     }
   }, []);
-  
+
   const handleTokenChange = (newToken: string) => {
     setToken(newToken);
-    
+
     // SAVE TOKEN TO LOCAL BROWSER STORAGE
     localStorage.setItem("token", newToken);
   };
@@ -29,27 +28,30 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <LoginForm onTokenChange={handleTokenChange}/>,
+      element: <LoginForm onTokenChange={handleTokenChange} />,
     },
     {
       path: "signup",
-      element: <SignUpForm onTokenChange={handleTokenChange}/>,
+      element: <SignUpForm onTokenChange={handleTokenChange} />,
     },
-
   ]);
-  
+
   if (token) {
     return (
-      <div className="todo-list-container">
-        <CreateTask JWTToken={token} />
-        <TaskList JWTToken={token} />
+      <div>
+        <div className="search-bar">
+          <CreateTask JWTToken={token} />
+        </div>
+        <div className="todo-list-container">
+          <TaskList JWTToken={token} />
+        </div>
         <NavBar />
       </div>
     );
   } else {
     return (
       <div className="form">
-        <RouterProvider router={router}/>
+        <RouterProvider router={router} />
       </div>
     );
   }

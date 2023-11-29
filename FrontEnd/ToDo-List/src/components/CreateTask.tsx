@@ -38,7 +38,7 @@ const CreateTask: React.FC<Props> = ({ JWTToken }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="search-bar">
+    <form onSubmit={handleSubmit}>
       <div className="input-group mb-3 ">
         <input
           ref={descRef}
